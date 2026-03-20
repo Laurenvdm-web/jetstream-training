@@ -29,6 +29,7 @@ nav{padding:8px 0}
 .bg{background:rgba(99,179,237,0.2);color:#63b3ed}
 .by{background:#fffbeb;color:#744216}
 .br{background:#fff5f5;color:#9b2235}
+.bp{background:#faf5ff;color:#6b46c1}
 .card{background:#fff;border-radius:12px;padding:22px 24px;border:1px solid #e8ecf0;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
 .card h2{font-size:16px;font-weight:700;margin-bottom:14px;color:#1a1a2e}
 .card h3{font-size:14px;font-weight:600;margin-bottom:10px;color:#2d3748}
@@ -39,8 +40,34 @@ nav{padding:8px 0}
 .lbtn:hover{background:#bee3f8}
 .lbtn.transcript{background:#f0fff4;color:#276749;border-color:#9ae6b4}
 .lbtn.transcript:hover{background:#9ae6b4}
+/* Edit mode */
+.editable{position:relative;border-radius:6px;transition:background 0.15s;min-height:20px}
+.editable:hover{background:rgba(102,126,234,0.07);outline:1px dashed rgba(102,126,234,0.35);cursor:text}
+.editable:focus{outline:2px solid #667eea;background:#fff;padding:2px 4px;border-radius:4px}
+.edit-hint{position:fixed;bottom:20px;right:20px;background:#1a1a2e;color:#fff;font-size:11px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999}
+.edit-hint.show{opacity:1}
+/* Dashboard specific */
+.welcome-name{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
+.modules-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.mod-card{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;cursor:pointer;transition:all 0.15s;display:flex;align-items:flex-start;gap:10px}
+.mod-card:hover{background:#ebf4ff;border-color:#bee3f8;transform:translateY(-1px)}
+.mod-icon{font-size:22px;line-height:1;margin-top:1px}
+.mod-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:3px}
+.mod-desc{font-size:11px;color:#718096;line-height:1.5}
+/* Schedule */
+.schedule-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.day-card{background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;text-align:center}
+.day-card.today{background:linear-gradient(135deg,#ebf4ff,#e9d8fd);border-color:#bee3f8}
+.day-name{font-size:10px;font-weight:700;color:#4a5568;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.day-content{font-size:11px;color:#2d3748;line-height:1.6;font-weight:500}
+/* Progress bar */
+.big-pb{background:#e2e8f0;border-radius:10px;height:10px;overflow:hidden;margin-top:8px}
+.big-pbi{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:10px;transition:width 0.4s}
+.completion-stats{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+.completion-pct{font-size:28px;font-weight:800;color:#667eea}
+.completion-detail{font-size:12px;color:#4a5568;line-height:1.7}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-/* Extra's completion styles */
+/* Extras */
 .extras-grid{display:flex;flex-direction:column;gap:14px}
 .extra-item{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px;transition:border-color 0.2s}
 .extra-item.completed{background:#f0fff4;border-color:#9ae6b4}
@@ -51,11 +78,6 @@ nav{padding:8px 0}
 .check-label input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:#667eea}
 .completion-bar-wrap{background:#fff;border-radius:12px;padding:18px 22px;border:1px solid #e8ecf0;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
 .completion-bar-wrap h3{font-size:14px;font-weight:700;margin-bottom:12px;color:#1a1a2e}
-.completion-stats{display:flex;align-items:center;gap:16px;margin-bottom:10px}
-.completion-pct{font-size:28px;font-weight:800;color:#667eea}
-.completion-detail{font-size:12px;color:#4a5568;line-height:1.7}
-.big-pb{background:#e2e8f0;border-radius:10px;height:10px;overflow:hidden;margin-top:8px}
-.big-pbi{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:10px;transition:width 0.4s}
 </style>
 </head>
 <body>
@@ -96,98 +118,264 @@ nav{padding:8px 0}
   </div>
 </aside>
 <main id="main"></main>
+<div class="edit-hint" id="edit-hint">✏️ Click any text to edit it</div>
+
 <script>
+// ── EDITABLE CONTENT SYSTEM ──────────────────────────────────────────────
+// All editable text is stored in localStorage under key "jt_content"
+// Default values are defined below — edit them here to change site defaults
+
+const DEFAULTS = {
+  // Dashboard
+  'dash-welcome-title': 'Welcome to Jetstream Training! 👋',
+  'dash-welcome-sub': 'Work through each module using the menu on the left. Take your time, tick off tasks as you go, and use the training AI model for any questions.',
+  'dash-progress-title': '📊 Your Training Progress',
+  // Schedule
+  'sched-title': '📅 Your Training Schedule',
+  'sched-sub': 'Your first week at a glance — click any day to edit it.',
+  'sched-mon': 'Welcome & Setup\nPlatform overview\nCirrus intro',
+  'sched-tue': 'Bookings Overview\nPink & Yellow Stars\nV1 & V2 Partners',
+  'sched-wed': 'Platforms deep dive\nAirbnb & VRBO\nBooking.com',
+  'sched-thu': 'Operations\nTags & Cancellations\nAutohost & Payments',
+  'sched-fri': 'Extra bits & catch up\nQ&A with manager\nShadowing',
+  // Quick Reference
+  'ref-title': '📋 Quick Reference',
+  'ref-slack': 'Post any access issues in the Slack #welcome group right away.',
+  'ref-cirrus': 'Log into Cirrus using your Jetstream Gmail credentials. Contact us immediately if access fails.',
+  'ref-1pass': 'Use 1Password for all platform credentials. Install the Chrome extension from the start.',
+  'ref-ai': 'Use the training AI model for any questions during self-study.',
+  'ref-notion': 'Log into Notion using work credentials from 1Password. Make sure it shows Jetstream - hello@jetstreamtech.io on the dropdown.',
+  // Questions
+  'q-title': '❓ Questions?',
+  'q-body': 'Use the training AI model for any questions during self-study. For access issues, post in the Slack Welcome group. For anything urgent, contact your manager directly.',
+};
+
+function getContent(key) {
+  try {
+    const stored = JSON.parse(localStorage.getItem('jt_content') || '{}');
+    return stored[key] !== undefined ? stored[key] : DEFAULTS[key];
+  } catch(e) { return DEFAULTS[key]; }
+}
+
+function saveContent(key, value) {
+  try {
+    const stored = JSON.parse(localStorage.getItem('jt_content') || '{}');
+    stored[key] = value;
+    localStorage.setItem('jt_content', JSON.stringify(stored));
+  } catch(e) {}
+}
+
+function e(key, tag='span', extraClass='') {
+  const val = getContent(key);
+  const cls = 'editable' + (extraClass ? ' ' + extraClass : '');
+  return `<${tag} class="${cls}" contenteditable="true" data-key="${key}" onblur="onEditBlur(this)" onfocus="showEditHint()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">${val}</${tag}>`;
+}
+
+function onEditBlur(el) {
+  saveContent(el.dataset.key, el.innerHTML);
+  hideEditHint();
+}
+
+function showEditHint() {
+  document.getElementById('edit-hint').classList.add('show');
+}
+function hideEditHint() {
+  setTimeout(() => document.getElementById('edit-hint').classList.remove('show'), 1500);
+}
+
+// ── SECTION CONTENT ──────────────────────────────────────────────────────
 const SECTIONS = {
   home: {
     icon:'🏠', title:'Dashboard Home', badge:'Welcome', badgeClass:'bg',
-    html:`<div class="card"><h2>👋 Welcome to Jetstream Training</h2><p>Use the navigation on the left to work through your training modules. Each section covers a key part of your role in B2C Guest Services.</p><p>Track your progress using the checkboxes in the Extra's section and the progress bar at the bottom of the sidebar.</p></div>`
+    build: buildHome
   },
   setup: {
     icon:'⚙️', title:'Getting Started', badge:'Setup', badgeClass:'bg',
-    html:`<div class="card"><h2>⚙️ Getting Started</h2><p>This section covers everything you need to set up before your first day.</p></div>`
+    html:`<div class="card"><h2>⚙️ Getting Started</h2><p>This section will cover everything you need before your first day.</p></div>`
   },
   company: {
     icon:'🏢', title:'Who Are We?', badge:'Company', badgeClass:'bg',
-    html:`<div class="card"><h2>🏢 Who Are We?</h2><p>Jetstream is a B2C guest services company managing short-term rental properties across multiple platforms.</p></div>`
+    html:`<div class="card"><h2>🏢 Who Are We?</h2><p>Coming soon.</p></div>`
   },
   bookings: {
     icon:'📋', title:'Bookings Overview', badge:'Core Training', badgeClass:'by',
-    html:`<div class="card"><h2>📋 Bookings Overview</h2><p>Learn how bookings flow from platforms into Cirrus and what your role is in managing them.</p></div>`
+    html:`<div class="card"><h2>📋 Bookings Overview</h2><p>Coming soon.</p></div>`
   },
   stars: {
     icon:'⭐', title:'Pink & Yellow Stars', badge:'Core Training', badgeClass:'by',
-    html:`<div class="card"><h2>⭐ Pink &amp; Yellow Stars</h2><p>Understand the star rating system used to prioritise guest communications.</p></div>`
+    html:`<div class="card"><h2>⭐ Pink &amp; Yellow Stars</h2><p>Coming soon.</p></div>`
   },
   v1v2: {
     icon:'🏨', title:'V1 & V2 Partners', badge:'Core Training', badgeClass:'by',
-    html:`<div class="card"><h2>🏨 V1 &amp; V2 Partners</h2><p>Learn the difference between V1 and V2 partner properties and how to handle each.</p></div>`
+    html:`<div class="card"><h2>🏨 V1 &amp; V2 Partners</h2><p>Coming soon.</p></div>`
   },
   partners: {
     icon:'📧', title:'Contacting Partners', badge:'Core Training', badgeClass:'by',
-    html:`<div class="card"><h2>📧 Contacting Partners</h2><p>Guidelines for communicating with property partners professionally and efficiently.</p></div>`
+    html:`<div class="card"><h2>📧 Contacting Partners</h2><p>Coming soon.</p></div>`
   },
   comms: {
     icon:'💬', title:'Comm. Platforms', badge:'Platforms', badgeClass:'bg',
-    html:`<div class="card"><h2>💬 Communication Platforms</h2><p>Overview of the tools used for internal and external communication.</p></div>`
+    html:`<div class="card"><h2>💬 Communication Platforms</h2><p>Coming soon.</p></div>`
   },
   airbnb: {
     icon:'🔴', title:'Airbnb', badge:'Platform', badgeClass:'br',
-    html:`<div class="card"><h2>🔴 Airbnb</h2><p>Learn how to manage Airbnb bookings, tickets, and guest communications.</p></div>`
+    html:`<div class="card"><h2>🔴 Airbnb</h2><p>Coming soon.</p></div>`
   },
   cirrus: {
     icon:'☁️', title:'Cirrus', badge:'Platform', badgeClass:'bg',
-    html:`<div class="card"><h2>☁️ Cirrus</h2><p>Cirrus is the central property management system. Learn how to navigate and use it effectively.</p></div>`
+    html:`<div class="card"><h2>☁️ Cirrus</h2><p>Coming soon.</p></div>`
   },
   vrbo: {
     icon:'🏠', title:'VRBO', badge:'Platform', badgeClass:'bg',
-    html:`<div class="card"><h2>🏠 VRBO</h2><p>Manage VRBO bookings and understand the platform-specific processes.</p></div>`
+    html:`<div class="card"><h2>🏠 VRBO</h2><p>Coming soon.</p></div>`
   },
   bookingcom: {
     icon:'🔵', title:'Booking.com', badge:'Platform', badgeClass:'bg',
-    html:`<div class="card"><h2>🔵 Booking.com</h2><p>Handle Booking.com reservations including VCC payments and guest communications.</p></div>`
+    html:`<div class="card"><h2>🔵 Booking.com</h2><p>Coming soon.</p></div>`
   },
   tags: {
     icon:'🏷️', title:'Tags', badge:'Operations', badgeClass:'by',
-    html:`<div class="card"><h2>🏷️ Tags</h2><p>Understand how to use tags in Cirrus to categorise and manage guest interactions.</p></div>`
+    html:`<div class="card"><h2>🏷️ Tags</h2><p>Coming soon.</p></div>`
   },
   cancellations: {
     icon:'❌', title:'Cancellations', badge:'Operations', badgeClass:'br',
-    html:`<div class="card"><h2>❌ Cancellations</h2><p>Learn the cancellation policy and process for each platform.</p></div>`
+    html:`<div class="card"><h2>❌ Cancellations</h2><p>Coming soon.</p></div>`
   },
   autohost: {
     icon:'🤖', title:'Autohost', badge:'Operations', badgeClass:'bg',
-    html:`<div class="card"><h2>🤖 Autohost</h2><p>Autohost is used for guest screening. Learn how to use it and action results.</p></div>`
+    html:`<div class="card"><h2>🤖 Autohost</h2><p>Coming soon.</p></div>`
   },
   payments: {
     icon:'💳', title:'Payments', badge:'Operations', badgeClass:'by',
-    html:`<div class="card"><h2>💳 Payments</h2><p>Understand how payments are processed across platforms and when to escalate issues.</p></div>`
+    html:`<div class="card"><h2>💳 Payments</h2><p>Coming soon.</p></div>`
   },
   extras: {
     icon:'⭐', title:"Extra's", badge:'Reference', badgeClass:'bg',
-    html: buildExtras()
+    build: buildExtras
   }
 };
 
+function buildHome() {
+  const days = ['mon','tue','wed','thu','fri'];
+  const dayNames = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+  const todayIdx = new Date().getDay() - 1;
+
+  const schedCards = days.map((d,i) => {
+    const isToday = i === todayIdx;
+    const content = getContent('sched-' + d).split('\\n').join('<br>');
+    return `<div class="day-card${isToday?' today':''}">
+      <div class="day-name">${dayNames[i]}</div>
+      <div class="day-content editable" contenteditable="true" data-key="sched-${d}"
+        onblur="onEditBlur(this)" onfocus="showEditHint()"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">${content}</div>
+    </div>`;
+  }).join('');
+
+  const modules = [
+    {id:'setup', icon:'⚙️', title:'Getting Started', desc:'Tools, accounts & setup'},
+    {id:'company', icon:'🏢', title:'Who Are We?', desc:'About Jetstream'},
+    {id:'bookings', icon:'📋', title:'Bookings Overview', desc:'How bookings flow in'},
+    {id:'stars', icon:'⭐', title:'Pink & Yellow Stars', desc:'Priority rating system'},
+    {id:'v1v2', icon:'🏨', title:'V1 & V2 Partners', desc:'Partner property types'},
+    {id:'partners', icon:'📧', title:'Contacting Partners', desc:'Partner communication'},
+    {id:'comms', icon:'💬', title:'Comm. Platforms', desc:'Slack, email & more'},
+    {id:'airbnb', icon:'🔴', title:'Airbnb', desc:'Managing Airbnb bookings'},
+    {id:'cirrus', icon:'☁️', title:'Cirrus', desc:'Our property management system'},
+    {id:'vrbo', icon:'🏠', title:'VRBO', desc:'Managing VRBO bookings'},
+    {id:'bookingcom', icon:'🔵', title:'Booking.com', desc:'Booking.com & VCC'},
+    {id:'tags', icon:'🏷️', title:'Tags', desc:'Tagging in Cirrus'},
+    {id:'cancellations', icon:'❌', title:'Cancellations', desc:'Cancellation processes'},
+    {id:'autohost', icon:'🤖', title:'Autohost', desc:'Guest screening'},
+    {id:'payments', icon:'💳', title:'Payments', desc:'Payment processing'},
+    {id:'extras', icon:'⭐', title:"Extra's", desc:'Reference videos & transcripts'},
+  ];
+
+  const modCards = modules.map(m =>
+    `<div class="mod-card" onclick="show('${m.id}')">
+      <div class="mod-icon">${m.icon}</div>
+      <div><div class="mod-title">${m.title}</div><div class="mod-desc">${m.desc}</div></div>
+    </div>`
+  ).join('');
+
+  // Progress
+  const items = ['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13','e14','e15','e16','e17','e18'];
+  let done = 0, total = items.length * 2;
+  items.forEach(id => {
+    if(localStorage.getItem('vid-'+id)) done++;
+    if(localStorage.getItem('trans-'+id)) done++;
+  });
+  const pct = Math.round((done/total)*100);
+
+  return `
+  <div class="card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:none;color:#fff;margin-bottom:18px">
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:44px;line-height:1">✈️</div>
+      <div style="flex:1">
+        ${e('dash-welcome-title','div','welcome-name')}
+        ${e('dash-welcome-sub','p','')}
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    ${e('dash-progress-title','h2','')}
+    <div class="completion-stats">
+      <div class="completion-pct">${pct}%</div>
+      <div class="completion-detail">${done} of ${total} Extra's tasks completed<br>${pct===100?'🎉 All done!':'Keep going — you're doing great!'}</div>
+    </div>
+    <div class="big-pb"><div class="big-pbi" style="width:${pct}%"></div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    ${e('sched-title','h2','')}
+    <p style="font-size:12px;color:#718096;margin-bottom:0">${e('sched-sub','span','')}</p>
+    <div class="schedule-grid">${schedCards}</div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <h2>🗺️ Training Modules</h2>
+    <p style="font-size:12px;color:#718096;margin-bottom:12px">Click any module to jump straight to it.</p>
+    <div class="modules-grid">${modCards}</div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      ${e('ref-title','h2','')}
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+        <div style="display:flex;gap:8px;align-items:flex-start"><span style="font-size:16px">💬</span><div><strong style="font-size:12px;display:block;margin-bottom:2px">Slack</strong>${e('ref-slack','span','')}</div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><span style="font-size:16px">☁️</span><div><strong style="font-size:12px;display:block;margin-bottom:2px">Cirrus</strong>${e('ref-cirrus','span','')}</div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><span style="font-size:16px">🔑</span><div><strong style="font-size:12px;display:block;margin-bottom:2px">1Password</strong>${e('ref-1pass','span','')}</div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><span style="font-size:16px">📝</span><div><strong style="font-size:12px;display:block;margin-bottom:2px">Notion</strong>${e('ref-notion','span','')}</div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><span style="font-size:16px">🤖</span><div><strong style="font-size:12px;display:block;margin-bottom:2px">Training AI</strong>${e('ref-ai','span','')}</div></div>
+      </div>
+    </div>
+    <div class="card">
+      ${e('q-title','h2','')}
+      ${e('q-body','p','')}
+    </div>
+  </div>`;
+}
+
 function buildExtras() {
   const items = [
-    { id:'e1', title:'New confirmed nexpax booking', video:'https://drive.google.com/file/d/1-NtmtK_placeholder/view', transcript:'' },
-    { id:'e2', title:'How to open an Airbnb ticket', video:'', transcript:'' },
-    { id:'e3', title:'Catch up', video:'', transcript:'' },
-    { id:'e4', title:'Sending email to partner', video:'', transcript:'' },
-    { id:'e5', title:'Airbnb availability issues', video:'', transcript:'https://docs.google.com/document/d/1pVZGmnE6hR74Jx7Xa51g0XPWwCDODk-gwWeDHy9XXL4/edit' },
-    { id:'e6', title:'Processing a new Booking.com reservation', video:'', transcript:'' },
-    { id:'e7', title:'Booking.com VCC', video:'', transcript:'' },
-    { id:'e8', title:'Add email when guest confirms', video:'', transcript:'' },
-    { id:'e9', title:'Send guest contact details to partner', video:'', transcript:'' },
-    { id:'e10', title:'Rate discrepancy', video:'', transcript:'' },
-    { id:'e11', title:'Processing a new VRBO booking', video:'', transcript:'' },
-    { id:'e12', title:'Info required part 1', video:'', transcript:'' },
-    { id:'e13', title:'Follow up guest tag examples', video:'', transcript:'' },
-    { id:'e14', title:'Follow up guest tag examples part 2', video:'', transcript:'' },
-    { id:'e15', title:'When to add a follow up guest tag', video:'', transcript:'' },
-    { id:'e16', title:'Handling the inbox part 1', video:'', transcript:'' },
-    { id:'e17', title:'Handling the inbox part 2', video:'', transcript:'' },
-    { id:'e18', title:'Checking spam', video:'', transcript:'' }
+    {id:'e1',title:'New confirmed nexpax booking',video:'',transcript:''},
+    {id:'e2',title:'How to open an Airbnb ticket',video:'',transcript:''},
+    {id:'e3',title:'Catch up',video:'',transcript:''},
+    {id:'e4',title:'Sending email to partner',video:'',transcript:''},
+    {id:'e5',title:'Airbnb availability issues',video:'',transcript:'https://docs.google.com/document/d/1pVZGmnE6hR74Jx7Xa51g0XPWwCDODk-gwWeDHy9XXL4/edit'},
+    {id:'e6',title:'Processing a new Booking.com reservation',video:'',transcript:''},
+    {id:'e7',title:'Booking.com VCC',video:'',transcript:''},
+    {id:'e8',title:'Add email when guest confirms',video:'',transcript:''},
+    {id:'e9',title:'Send guest contact details to partner',video:'',transcript:''},
+    {id:'e10',title:'Rate discrepancy',video:'',transcript:''},
+    {id:'e11',title:'Processing a new VRBO booking',video:'',transcript:''},
+    {id:'e12',title:'Info required part 1',video:'',transcript:''},
+    {id:'e13',title:'Follow up guest tag examples',video:'',transcript:''},
+    {id:'e14',title:'Follow up guest tag examples part 2',video:'',transcript:''},
+    {id:'e15',title:'When to add a follow up guest tag',video:'',transcript:''},
+    {id:'e16',title:'Handling the inbox part 1',video:'',transcript:''},
+    {id:'e17',title:'Handling the inbox part 2',video:'',transcript:''},
+    {id:'e18',title:'Checking spam',video:'',transcript:''}
   ];
   let itemsHtml = items.map(item => {
     let links = '';
@@ -204,7 +392,7 @@ function buildExtras() {
       </div>
     </div>`;
   }).join('');
-  return `<div class="completion-bar-wrap" id="extras-progress">
+  return `<div class="completion-bar-wrap">
     <h3>📊 Your Progress</h3>
     <div class="completion-stats">
       <div class="completion-pct" id="extras-pct">0%</div>
@@ -222,61 +410,59 @@ function updateExtras() {
     const vid = document.getElementById('vid-'+id);
     const trans = document.getElementById('trans-'+id);
     const item = document.getElementById('item-'+id);
-    if(vid && vid.checked) { done++; localStorage.setItem('vid-'+id,'1'); } else if(vid) localStorage.removeItem('vid-'+id);
-    if(trans && trans.checked) { done++; localStorage.setItem('trans-'+id,'1'); } else if(trans) localStorage.removeItem('trans-'+id);
-    if(item) item.classList.toggle('completed', vid && trans && vid.checked && trans.checked);
+    if(vid&&vid.checked){done++;localStorage.setItem('vid-'+id,'1');}else if(vid)localStorage.removeItem('vid-'+id);
+    if(trans&&trans.checked){done++;localStorage.setItem('trans-'+id,'1');}else if(trans)localStorage.removeItem('trans-'+id);
+    if(item)item.classList.toggle('completed',vid&&trans&&vid.checked&&trans.checked);
   });
   const pct = Math.round((done/total)*100);
-  const pctEl = document.getElementById('extras-pct');
-  const barEl = document.getElementById('extras-bar');
-  const detailEl = document.getElementById('extras-detail');
-  if(pctEl) pctEl.textContent = pct+'%';
-  if(barEl) barEl.style.width = pct+'%';
-  if(detailEl) detailEl.innerHTML = done+' of '+total+' tasks completed<br>'+( pct===100 ? '🎉 All done! Great work!' : 'Watch videos &amp; read transcripts to track your progress');
-  // Save to sidebar progress too
+  const pctEl=document.getElementById('extras-pct');
+  const barEl=document.getElementById('extras-bar');
+  const detailEl=document.getElementById('extras-detail');
+  if(pctEl)pctEl.textContent=pct+'%';
+  if(barEl)barEl.style.width=pct+'%';
+  if(detailEl)detailEl.innerHTML=done+' of '+total+' tasks completed<br>'+(pct===100?'🎉 All done! Great work!':'Watch videos &amp; read transcripts to track your progress');
   updateSidebarProgress();
 }
 
 function restoreExtras() {
   const items = ['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13','e14','e15','e16','e17','e18'];
   items.forEach(id => {
-    const vid = document.getElementById('vid-'+id);
-    const trans = document.getElementById('trans-'+id);
-    if(vid && localStorage.getItem('vid-'+id)) vid.checked = true;
-    if(trans && localStorage.getItem('trans-'+id)) trans.checked = true;
+    const vid=document.getElementById('vid-'+id);
+    const trans=document.getElementById('trans-'+id);
+    if(vid&&localStorage.getItem('vid-'+id))vid.checked=true;
+    if(trans&&localStorage.getItem('trans-'+id))trans.checked=true;
   });
   updateExtras();
 }
 
 function updateSidebarProgress() {
-  const items = ['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13','e14','e15','e16','e17','e18'];
-  let done = 0, total = items.length * 2;
-  items.forEach(id => {
-    if(localStorage.getItem('vid-'+id)) done++;
-    if(localStorage.getItem('trans-'+id)) done++;
+  const items=['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13','e14','e15','e16','e17','e18'];
+  let done=0,total=items.length*2;
+  items.forEach(id=>{
+    if(localStorage.getItem('vid-'+id))done++;
+    if(localStorage.getItem('trans-'+id))done++;
   });
-  const pct = Math.round((done/total)*100);
-  const pctEl = document.getElementById('pct');
-  const pbiEl = document.getElementById('pbi');
-  if(pctEl) pctEl.textContent = pct+'%';
-  if(pbiEl) pbiEl.style.width = pct+'%';
+  const pct=Math.round((done/total)*100);
+  const pctEl=document.getElementById('pct');
+  const pbiEl=document.getElementById('pbi');
+  if(pctEl)pctEl.textContent=pct+'%';
+  if(pbiEl)pbiEl.style.width=pct+'%';
 }
 
 function show(id) {
-  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('n-'+id);
-  if(btn) btn.classList.add('active');
-  const s = SECTIONS[id];
-  if(!s) return;
-  document.getElementById('main').innerHTML =
-    `<div class="mh"><div class="mh-icon">${s.icon}</div><div><h1>${s.title}</h1><p>${s.desc||'&nbsp;'}</p><span class="badge ${s.badgeClass}">${s.badge}</span></div></div>`
-    + s.html;
-  if(id==='extras') restoreExtras();
-  localStorage.setItem('lastSection', id);
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('n-'+id);
+  if(btn)btn.classList.add('active');
+  const s=SECTIONS[id];
+  if(!s)return;
+  const header=`<div class="mh"><div class="mh-icon">${s.icon}</div><div><h1>${s.title}</h1><p>&nbsp;</p><span class="badge ${s.badgeClass}">${s.badge}</span></div></div>`;
+  const body=s.build ? s.build() : s.html;
+  document.getElementById('main').innerHTML=header+body;
+  if(id==='extras')restoreExtras();
+  localStorage.setItem('lastSection',id);
 }
 
-// Load last section or default to home
-const last = localStorage.getItem('lastSection') || 'home';
+const last=localStorage.getItem('lastSection')||'home';
 show(last);
 updateSidebarProgress();
 </script>
