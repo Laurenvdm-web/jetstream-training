@@ -171,7 +171,7 @@ function buildHome(){
     {id:'extras',icon:'&#x2B50;',t:"Extra's",d:'Reference videos &amp; transcripts'}
   ];
   var mods=modules.map(function(m){
-    return '<div class="mod-card" onclick="show(''+m.id+'')"><div class="mod-icon">'+m.icon+'</div><div><div class="mod-title">'+m.t+'</div><div class="mod-desc">'+m.d+'</div></div></div>';
+    return '<div class="mod-card" onclick="showMod(this)" data-id="'+m.id+'"><div class="mod-icon">'+m.icon+'</div><div><div class="mod-title">'+m.t+'</div><div class="mod-desc">'+m.d+'</div></div></div>';
   }).join('');
 
   return '<div class="welcome-banner"><div style="font-size:42px;line-height:1">&#x2708;&#xFE0F;</div><div style="flex:1">'+ed('wt','welcome-title')+ed('ws','welcome-sub')+'</div></div>'
@@ -269,6 +269,7 @@ var SECTIONS={
   extras:{icon:'&#x2B50;',title:"Extra's",badge:'Reference',bc:'bg',build:buildExtras}
 };
 
+function showMod(el){show(el.getAttribute("data-id"));}
 function show(id){
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
   var btn=document.getElementById('n-'+id);
