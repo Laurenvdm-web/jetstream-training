@@ -20,26 +20,20 @@ nav{padding:8px 0}
 #pp{font-size:11px;color:#8892b0;margin-bottom:6px;display:block}
 .pb{background:rgba(255,255,255,0.1);border-radius:10px;height:6px;overflow:hidden}
 .pbi{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:10px;transition:width 0.4s}
+#user-chip{font-size:11px;color:#667eea;margin-top:6px;display:block;font-weight:600}
 #main{flex:1;overflow-y:auto;padding:28px 32px}
 .mh{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:14px;padding:26px 28px;margin-bottom:22px;color:#fff;display:flex;gap:16px;align-items:flex-start}
 .mh-icon{font-size:38px;line-height:1}
 .mh h1{font-size:22px;font-weight:700;margin-bottom:5px}
-.mh p{font-size:13px;color:#a0aec0;line-height:1.6}
 .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:600;margin-top:8px}
 .bg{background:rgba(99,179,237,0.2);color:#63b3ed}
 .by{background:#fffbeb;color:#744216}
 .br{background:#fff5f5;color:#9b2235}
 .card{background:#fff;border-radius:12px;padding:22px 24px;border:1px solid #e8ecf0;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
 .card h2{font-size:16px;font-weight:700;margin-bottom:14px;color:#1a1a2e}
-.card p{font-size:13px;color:#4a5568;line-height:1.7;margin-bottom:10px}
 .welcome-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:14px;padding:26px 28px;margin-bottom:18px;color:#fff;display:flex;gap:16px;align-items:flex-start}
 .welcome-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;display:block}
 .welcome-sub{font-size:13px;color:#a0aec0;line-height:1.6;display:block}
-.editable{border-radius:4px;transition:background 0.2s}
-.editable:hover{background:rgba(255,255,255,0.1);outline:1px dashed rgba(255,255,255,0.3);cursor:text}
-.editable:focus{outline:2px solid #63b3ed;background:rgba(255,255,255,0.08);padding:2px 4px}
-.lbtn{display:inline-flex;align-items:center;gap:5px;background:#ebf4ff;color:#2b6cb0;padding:5px 11px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;margin:3px 3px 3px 0;border:1px solid #bee3f8}
-.lbtn.gr{background:#f0fff4;color:#276749;border-color:#9ae6b4}
 .big-pb{background:#e2e8f0;border-radius:10px;height:10px;overflow:hidden;margin-top:8px}
 .big-pbi{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:10px;transition:width 0.4s}
 .prog-wrap{background:#fff;border-radius:12px;padding:16px 20px;border:1px solid #e8ecf0;margin-bottom:16px}
@@ -47,276 +41,324 @@ nav{padding:8px 0}
 .c-stats{display:flex;align-items:center;gap:16px;margin-bottom:8px}
 .c-pct{font-size:26px;font-weight:800;color:#667eea}
 .c-detail{font-size:12px;color:#4a5568;line-height:1.7}
-.extra-item{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:12px}
+.lbtn{display:inline-flex;align-items:center;gap:5px;background:#ebf4ff;color:#2b6cb0;padding:5px 11px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;margin:3px 3px 3px 0;border:1px solid #bee3f8}
+.lbtn.gr{background:#f0fff4;color:#276749;border-color:#9ae6b4}
+.extra-item{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:10px}
 .extra-item.done{background:#f0fff4;border-color:#9ae6b4}
-.ei-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:8px}
+.ei-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
 .ei-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .ei-checks{display:flex;gap:16px}
 .chk{display:flex;align-items:center;gap:5px;font-size:12px;color:#4a5568;cursor:pointer}
 .chk input{width:14px;height:14px;accent-color:#667eea}
-/* Name picker overlay */
-.setup-item{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px}.setup-item.done{background:#f0fff4;border-color:#9ae6b4}.setup-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;accent-color:#667eea;flex-shrink:0;cursor:pointer}.setup-info{flex:1}.setup-name{font-size:13px;font-weight:700;color:#1a1a2e}.setup-who{font-size:11px;color:#667eea;font-weight:600;margin:2px 0}.setup-note{font-size:11px;color:#718096;line-height:1.5}.group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#4a5568;padding:10px 0 6px;border-bottom:1px solid #e2e8f0;margin-bottom:10px}#name-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,30,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px)}
+.setup-item{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px}
+.setup-item.done{background:#f0fff4;border-color:#9ae6b4}
+.setup-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;accent-color:#667eea;flex-shrink:0;cursor:pointer}
+.setup-info{flex:1}
+.setup-name{font-size:13px;font-weight:700;color:#1a1a2e}
+.setup-who{font-size:11px;color:#667eea;font-weight:600;margin:2px 0}
+.setup-note{font-size:11px;color:#718096;line-height:1.5}
+.group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#4a5568;padding:10px 0 6px;border-bottom:1px solid #e2e8f0;margin-bottom:10px}
+.tz-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tz-btn{padding:6px 14px;border-radius:8px;border:2px solid #e2e8f0;background:#fff;font-size:12px;font-weight:600;cursor:pointer;color:#4a5568;transition:all 0.15s}
+.tz-btn.active{background:#667eea;color:#fff;border-color:#667eea}
+.sched-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.sched-day{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px}
+.sched-day.off{background:#fff5f5;border-color:#fed7d7}
+.sched-day-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#4a5568;margin-bottom:6px}
+.sched-time{font-size:13px;font-weight:700;color:#1a1a2e}
+.sched-sa{font-size:11px;color:#667eea;margin-top:3px;font-weight:600}
+.sched-off{font-size:13px;font-weight:700;color:#fc8181}
+#name-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,30,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px)}
 #name-box{background:#fff;border-radius:18px;padding:40px 44px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-#name-box .nb-icon{font-size:52px;margin-bottom:16px}
+#name-box .nbi{font-size:52px;margin-bottom:16px}
 #name-box h2{font-size:22px;font-weight:800;color:#1a1a2e;margin-bottom:8px}
 #name-box p{font-size:13px;color:#4a5568;margin-bottom:24px;line-height:1.6}
-#name-select{width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;color:#1a1a2e;background:#f7fafc;margin-bottom:16px;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5568' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+#name-select{width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;color:#1a1a2e;background:#f7fafc;margin-bottom:16px;cursor:pointer}
 #name-select:focus{outline:none;border-color:#667eea}
-#name-btn{width:100%;padding:13px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s}
-#name-btn:hover{opacity:0.9}
+#name-btn{width:100%;padding:13px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer}
 #name-btn:disabled{opacity:0.4;cursor:not-allowed}
-#user-chip{font-size:11px;color:#8892b0;margin-top:8px;display:block}
 </style>
 </head>
 <body>
-
-<!-- Name picker overlay -->
-<div id="name-overlay">
-  <div id="name-box">
-    <div class="nb-icon">&#x2708;&#xFE0F;</div>
-    <h2>Welcome to Jetstream Training!</h2>
-    <p>Before we get started, please select your name from the list below.</p>
-    <select id="name-select">
-      <option value="">-- Select your name --</option>
-      <option value="Jada">Jada</option>
-      <option value="Other">Other</option>
-    </select>
-    <button id="name-btn" onclick="startTraining()" disabled>Start Training &#x1F680;</button>
-  </div>
-</div>
-
+<div id="name-overlay"><div id="name-box"><div class="nbi">&#x2708;&#xFE0F;</div><h2>Welcome to Jetstream Training!</h2><p>Before we get started, please select your name from the list below.</p><select id="name-select"><option value="">-- Select your name --</option><option value="Jada">Jada</option><option value="Other">Other</option></select><button id="name-btn" onclick="startTraining()" disabled>Start Training &#x1F680;</button></div></div>
 <aside id="sidebar">
-  <div id="sh"><div class="logo">&#x2708;&#xFE0F; Training at Jetstream</div><div class="sub">B2C Guest Services &middot; 2025</div></div>
-  <nav>
-    <div class="nsl">Navigation</div>
-    <button class="nb" id="n-home" onclick="show('home')">&#x1F3E0; Dashboard Home</button>
-    <div class="nsl">Setup</div>
-    <button class="nb" id="n-setup" onclick="show('setup')">&#x2699;&#xFE0F; Getting Started</button>
-    <div class="nsl">Company</div>
-    <button class="nb" id="n-company" onclick="show('company')">&#x1F3E2; Who Are We?</button>
-    <div class="nsl">Core Training</div>
-    <button class="nb" id="n-bookings" onclick="show('bookings')">&#x1F4CB; Bookings Overview</button>
-    <button class="nb" id="n-stars" onclick="show('stars')">&#x2B50; Pink &amp; Yellow Stars</button>
-    <button class="nb" id="n-v1v2" onclick="show('v1v2')">&#x1F3E8; V1 &amp; V2 Partners</button>
-    <button class="nb" id="n-partners" onclick="show('partners')">&#x1F4E7; Contacting Partners</button>
-    <div class="nsl">Platforms</div>
-    <button class="nb" id="n-comms" onclick="show('comms')">&#x1F4AC; Comm. Platforms</button>
-    <button class="nb" id="n-airbnb" onclick="show('airbnb')">&#x1F534; Airbnb</button>
-    <button class="nb" id="n-cirrus" onclick="show('cirrus')">&#x2601;&#xFE0F; Cirrus</button>
-    <button class="nb" id="n-vrbo" onclick="show('vrbo')">&#x1F3E0; VRBO</button>
-    <button class="nb" id="n-bookingcom" onclick="show('bookingcom')">&#x1F535; Booking.com</button>
-    <div class="nsl">Operations</div>
-    <button class="nb" id="n-tags" onclick="show('tags')">&#x1F3F7;&#xFE0F; Tags</button>
-    <button class="nb" id="n-cancellations" onclick="show('cancellations')">&#x274C; Cancellations</button>
-    <button class="nb" id="n-autohost" onclick="show('autohost')">&#x1F916; Autohost</button>
-    <button class="nb" id="n-payments" onclick="show('payments')">&#x1F4B3; Payments</button>
-    <div class="nsl">Extras</div>
-    <button class="nb" id="n-extras" onclick="show('extras')">&#x2B50; Extra's</button>
-  </nav>
-  <div id="pf">
-    <span id="pp">Training Progress: <strong id="pct">0%</strong></span>
-    <div class="pb"><div class="pbi" id="pbi" style="width:0%"></div></div>
-    <span id="user-chip"></span>
-  </div>
+<div id="sh"><div class="logo">&#x2708;&#xFE0F; Training at Jetstream</div><div class="sub">B2C Guest Services &middot; 2025</div></div>
+<nav>
+<div class="nsl">Navigation</div>
+<button class="nb" id="n-home" onclick="show('home')">&#x1F3E0; Dashboard Home</button>
+<div class="nsl">Setup</div>
+<button class="nb" id="n-setup" onclick="show('setup')">&#x2699;&#xFE0F; Getting Started</button>
+<div class="nsl">Company</div>
+<button class="nb" id="n-company" onclick="show('company')">&#x1F3E2; Who Are We?</button>
+<div class="nsl">Core Training</div>
+<button class="nb" id="n-bookings" onclick="show('bookings')">&#x1F4CB; Bookings Overview</button>
+<button class="nb" id="n-stars" onclick="show('stars')">&#x2B50; Pink &amp; Yellow Stars</button>
+<button class="nb" id="n-v1v2" onclick="show('v1v2')">&#x1F3E8; V1 &amp; V2 Partners</button>
+<button class="nb" id="n-partners" onclick="show('partners')">&#x1F4E7; Contacting Partners</button>
+<div class="nsl">Platforms</div>
+<button class="nb" id="n-comms" onclick="show('comms')">&#x1F4AC; Comm. Platforms</button>
+<button class="nb" id="n-airbnb" onclick="show('airbnb')">&#x1F534; Airbnb</button>
+<button class="nb" id="n-cirrus" onclick="show('cirrus')">&#x2601;&#xFE0F; Cirrus</button>
+<button class="nb" id="n-vrbo" onclick="show('vrbo')">&#x1F3E0; VRBO</button>
+<button class="nb" id="n-bookingcom" onclick="show('bookingcom')">&#x1F535; Booking.com</button>
+<div class="nsl">Operations</div>
+<button class="nb" id="n-tags" onclick="show('tags')">&#x1F3F7;&#xFE0F; Tags</button>
+<button class="nb" id="n-cancellations" onclick="show('cancellations')">&#x274C; Cancellations</button>
+<button class="nb" id="n-autohost" onclick="show('autohost')">&#x1F916; Autohost</button>
+<button class="nb" id="n-payments" onclick="show('payments')">&#x1F4B3; Payments</button>
+<div class="nsl">Extras</div>
+<button class="nb" id="n-extras" onclick="show('extras')">&#x2B50; Extra's</button>
+</nav>
+<div id="pf"><span id="pp">Training Progress: <strong id="pct">0%</strong></span><div class="pb"><div class="pbi" id="pbi" style="width:0%"></div></div><span id="user-chip"></span></div>
 </aside>
-
 <main id="main"></main>
-
 <script>
-var IDS = ['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13','e14','e15','e16','e17','e18'];var EXTRA_IDS=['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13','e14','e15','e16','e17','e18'];
-var NAMES = ['Jada','Other'];
-
-// Name select dropdown enable/disable
-document.getElementById('name-select').addEventListener('change', function() {
-  document.getElementById('name-btn').disabled = !this.value;
-});
-
-function startTraining() {
-  var name = document.getElementById('name-select').value;
-  if (!name) return;
-  try { localStorage.setItem('jt-user', name); } catch(e) {}
-  document.getElementById('name-overlay').style.display = 'none';
-  updateUserChip(name);
-  var ls = 'home';
-  try { ls = localStorage.getItem('ls-' + name) || 'home'; } catch(e) {}
-  show(ls);
-  updSidebar();
-}
-
-function updateUserChip(name) {
-  var chip = document.getElementById('user-chip');
-  if (chip && name) chip.textContent = 'Logged in as: ' + name;
-}
-
-function getUser() {
-  try { return localStorage.getItem('jt-user') || ''; } catch(e) { return ''; }
-}
-
-function getP() {
-  var user = getUser();
-  var done = 0, total = IDS.length * 2;
-  for (var i = 0; i < IDS.length; i++) {
-    if (localStorage.getItem(user + '-vid-' + IDS[i])) done++;
-    if (localStorage.getItem(user + '-trs-' + IDS[i])) done++;
-  }
-  return { done: done, total: total, pct: Math.round((done / total) * 100) };
-}
-
-function updSidebar() {
-  var p = getP();
-  document.getElementById('pct').textContent = p.pct + '%';
-  document.getElementById('pbi').style.width = p.pct + '%';
-}
-
-function save(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
-function load(key, def) { try { return localStorage.getItem(key) || def; } catch(e) { return def; } }
-
-function homePage() {
-  var user = getUser();
-  var title = load('wt', 'Welcome to Jetstream Training! &#x1F44B;');
-  var sub = load('ws', 'Work through each module using the menu on the left. Take your time, tick off tasks as you go, and use the training AI model for any questions.');
-  var p = getP();
-  var greeting = user ? ('Hi ' + user + '! ') : '';
-  var html = '';
-  html += '<div class="welcome-card">';
-  html += '<div style="font-size:44px;line-height:1">&#x2708;&#xFE0F;</div>';
-  html += '<div style="flex:1">';
-  html += '<span class="welcome-title editable" contenteditable="true" id="wt-el" onblur="save(\'wt\',this.innerHTML)">' + title + '</span>';
-  html += '<span class="welcome-sub editable" contenteditable="true" id="ws-el" onblur="save(\'ws\',this.innerHTML)">' + greeting + sub + '</span>';
-  html += '</div></div>';
-  html += '<div class="card">';
-  html += '<h2>&#x1F4CA; Your Training Progress</h2>';
-  html += '<div class="c-stats"><div class="c-pct">' + p.pct + '%</div><div class="c-detail">' + p.done + ' of ' + p.total + ' tasks completed</div></div>';
-  html += '<div class="big-pb"><div class="big-pbi" style="width:' + p.pct + '%"></div></div>';
-  html += '</div>';
-  return html;
-}
-
-function comingSoon(title, icon) {
-  return '<div class="card"><h2>' + icon + ' ' + title + '</h2><p>This section is coming soon. Check back shortly!</p></div>';
-}
-
-function setupPage(){var user=getUser();var sp=getSetupP();var html='<div class="prog-wrap"><h3>&#x2699;&#xFE0F; Getting Started Progress</h3><div class="c-stats"><div class="c-pct" id="spct">'+sp.pct+'%</div><div class="c-detail" id="sdet">'+sp.done+' of '+sp.total+' items completed</div></div><div class="big-pb"><div class="big-pbi" id="sbar" style="width:'+sp.pct+'%"></div></div></div>';var groups=[{label:'&#x2757; Important - set up in your first days',items:[{id:'s1',name:'Gmail',who:'Set up by: Mieke',note:'Mieke will set up an account and send you credentials.'},{id:'s2',name:'Slack',who:'Set up by: Kirsten',note:'Kirsten will set up an account and send you credentials.'},{id:'s3',name:'1Password and Chrome Extension',who:'Set up by: Mieke',note:'Chris will send credentials. Install the 1Password Chrome extension.'},{id:'s4',name:'Cirrus',who:'Set up by: Chris',note:'Use your Jetstream Gmail credentials to log in.'},{id:'s5',name:'Google Calendar',who:'Set up by: Mieke',note:'Use the hello@jetstreamtech.io Gmail account.'},{id:'s6',name:'Hubspot',who:'Set up by: Kirsten',note:'A unique Hubspot link will be sent to you.'}]},{label:'&#x1F4E7; Set up by Kirsten - invite sent to work Gmail',items:[{id:'s7',name:'Jetchat',who:'Set up by: Kirsten',note:'Kirsten will set this up for you.'},{id:'s8',name:'Aircall',who:'Set up by: Kirsten',note:'Kirsten will set this up for you.'},{id:'s9',name:'Front',who:'Set up by: Kirsten',note:'Kirsten will set this up for you.'},{id:'s10',name:'Enso',who:'Set up by: Kirsten',note:'Kirsten will set this up for you.'}]},{label:'&#x23F3; Set up at a later stage',items:[{id:'s11',name:'Stripe',who:'Set up by: Jess',note:'Comes at a later stage in your training.'},{id:'s12',name:'Humi',who:'Set up by: Jennifer',note:'Comes at a later stage in your training.'}]},{label:'&#x1F511; Shared accounts - credentials in 1Password',items:[{id:'s13',name:'Notion',who:'B2C access',note:'Find credentials in 1Password. Do not log in using Gmail.'},{id:'s14',name:'Power BI',who:'B2C access',note:'Find credentials in 1Password.'}]}];for(var g=0;g<groups.length;g++){var grp=groups[g];html+='<div class="group-label">'+grp.label+'</div>';for(var i=0;i<grp.items.length;i++){var it=grp.items[i];var checked=localStorage.getItem(user+'-setup-'+it.id)?'checked':'';var dc=checked?' done':'';html+='<div class="setup-item'+dc+'" id="si-'+it.id+'"><input type="checkbox" id="sc-'+it.id+'" '+checked+' onchange="updSetup()"><div class="setup-info"><div class="setup-name">'+it.name+'</div><div class="setup-who">'+it.who+'</div><div class="setup-note">'+it.note+'</div></div></div>';}}return html;}
-function updSetup(){var user=getUser();var done=0;for(var i=0;i<SETUP_IDS.length;i++){var id=SETUP_IDS[i];var cb=document.getElementById('sc-'+id);var el=document.getElementById('si-'+id);if(cb&&cb.checked){done++;localStorage.setItem(user+'-setup-'+id,'1');}else if(cb){localStorage.removeItem(user+'-setup-'+id);}if(el)el.classList.toggle('done',!!(cb&&cb.checked));}var pct=Math.round((done/SETUP_IDS.length)*100);var pe=document.getElementById('spct');if(pe)pe.textContent=pct+'%';var be=document.getElementById('sbar');if(be)be.style.width=pct+'%';var de=document.getElementById('sdet');if(de)de.textContent=done+' of '+SETUP_IDS.length+' items completed'+(pct===100?' done!':'');updSidebar();}
-function getSetupP(){var user=getUser();var done=0;for(var i=0;i<SETUP_IDS.length;i++){if(localStorage.getItem(user+'-setup-'+SETUP_IDS[i]))done++;}return{done:done,total:SETUP_IDS.length,pct:Math.round((done/SETUP_IDS.length)*100)};}
-function extrasPage() {
-  var user = getUser();
-  var items = [
-    {id:'e1',t:'New confirmed nexpax booking',v:'',tr:''},
-    {id:'e2',t:'How to open an Airbnb ticket',v:'',tr:''},
-    {id:'e3',t:'Catch up',v:'',tr:''},
-    {id:'e4',t:'Sending email to partner',v:'',tr:''},
-    {id:'e5',t:'Airbnb availability issues',v:'',tr:'https://docs.google.com/document/d/1pVZGmnE6hR74Jx7Xa51g0XPWwCDODk-gwWeDHy9XXL4/edit'},
-    {id:'e6',t:'Processing a new Booking.com reservation',v:'',tr:''},
-    {id:'e7',t:'Booking.com VCC',v:'',tr:''},
-    {id:'e8',t:'Add email when guest confirms',v:'',tr:''},
-    {id:'e9',t:'Send guest contact details to partner',v:'',tr:''},
-    {id:'e10',t:'Rate discrepancy',v:'',tr:''},
-    {id:'e11',t:'Processing a new VRBO booking',v:'',tr:''},
-    {id:'e12',t:'Info required part 1',v:'',tr:''},
-    {id:'e13',t:'Follow up guest tag examples',v:'',tr:''},
-    {id:'e14',t:'Follow up guest tag examples part 2',v:'',tr:''},
-    {id:'e15',t:'When to add a follow up guest tag',v:'',tr:''},
-    {id:'e16',t:'Handling the inbox part 1',v:'',tr:''},
-    {id:'e17',t:'Handling the inbox part 2',v:'',tr:''},
-    {id:'e18',t:'Checking spam',v:'',tr:''}
-  ];
-  var p = getP();
-  var html = '<div class="prog-wrap"><h3>&#x1F4CA; Your Progress</h3>';
-  html += '<div class="c-stats"><div class="c-pct" id="epct">' + p.pct + '%</div><div class="c-detail" id="edet">' + p.done + ' of ' + p.total + ' tasks completed</div></div>';
-  html += '<div class="big-pb"><div class="big-pbi" id="ebar" style="width:' + p.pct + '%"></div></div></div>';
-  for (var i = 0; i < items.length; i++) {
-    var it = items[i];
-    var vbtn = it.v ? ('<a class="lbtn" href="' + it.v + '" target="_blank">&#x25B6; Video</a>') : '<span class="lbtn" style="opacity:0.4">&#x25B6; Video</span>';
-    var tbtn = it.tr ? ('<a class="lbtn gr" href="' + it.tr + '" target="_blank">&#x1F4C4; Transcript</a>') : '<span class="lbtn gr" style="opacity:0.4">&#x1F4C4; Transcript</span>';
-    html += '<div class="extra-item" id="ei-' + it.id + '">' +
-      '<div class="ei-title">' + it.t + '</div>' +
-      '<div class="ei-links">' + vbtn + tbtn + '</div>' +
-      '<div class="ei-checks">' +
-      '<label class="chk"><input type="checkbox" id="vid-' + it.id + '" onchange="upd()"> &#x2705; Watched</label>' +
-      '<label class="chk"><input type="checkbox" id="trs-' + it.id + '" onchange="upd()"> &#x1F4C4; Read transcript</label>' +
-      '</div></div>';
-  }
-  return html;
-}
-
-function upd() {
-  var user = getUser();
-  var done = 0, total = IDS.length * 2;
-  for (var i = 0; i < IDS.length; i++) {
-    var id = IDS[i];
-    var v = document.getElementById('vid-' + id);
-    var t = document.getElementById('trs-' + id);
-    var el = document.getElementById('ei-' + id);
-    if (v && v.checked) { done++; localStorage.setItem(user + '-vid-' + id, '1'); }
-    else if (v) { localStorage.removeItem(user + '-vid-' + id); }
-    if (t && t.checked) { done++; localStorage.setItem(user + '-trs-' + id, '1'); }
-    else if (t) { localStorage.removeItem(user + '-trs-' + id); }
-    if (el) el.classList.toggle('done', !!(v && t && v.checked && t.checked));
-  }
-  var pct = Math.round((done / total) * 100);
-  var pe = document.getElementById('epct'); if (pe) pe.textContent = pct + '%';
-  var be = document.getElementById('ebar'); if (be) be.style.width = pct + '%';
-  var de = document.getElementById('edet'); if (de) de.innerHTML = done + ' of ' + total + ' tasks completed' + (pct === 100 ? ' &#x1F389;' : '');
-  updSidebar();
-}
-
-function restoreExtras() {
-  var user = getUser();
-  for (var i = 0; i < IDS.length; i++) {
-    var id = IDS[i];
-    var v = document.getElementById('vid-' + id);
-    var t = document.getElementById('trs-' + id);
-    if (v && localStorage.getItem(user + '-vid-' + id)) v.checked = true;
-    if (t && localStorage.getItem(user + '-trs-' + id)) t.checked = true;
-  }
-  upd();
-}
-
-var PAGES = {
-  home: { icon: '&#x1F3E0;', title: 'Dashboard Home', badge: 'Welcome', bc: 'bg', fn: homePage },
-  setup: { icon: '&#x2699;&#xFE0F;', title: 'Getting Started', badge: 'Setup', bc: 'bg', fn: setupPage },
-  company: { icon: '&#x1F3E2;', title: 'Who Are We?', badge: 'Company', bc: 'bg', fn: function() { return comingSoon('Who Are We?', '&#x1F3E2;'); } },
-  bookings: { icon: '&#x1F4CB;', title: 'Bookings Overview', badge: 'Core Training', bc: 'by', fn: function() { return comingSoon('Bookings Overview', '&#x1F4CB;'); } },
-  stars: { icon: '&#x2B50;', title: 'Pink &amp; Yellow Stars', badge: 'Core Training', bc: 'by', fn: function() { return comingSoon('Pink &amp; Yellow Stars', '&#x2B50;'); } },
-  v1v2: { icon: '&#x1F3E8;', title: 'V1 &amp; V2 Partners', badge: 'Core Training', bc: 'by', fn: function() { return comingSoon('V1 &amp; V2 Partners', '&#x1F3E8;'); } },
-  partners: { icon: '&#x1F4E7;', title: 'Contacting Partners', badge: 'Core Training', bc: 'by', fn: function() { return comingSoon('Contacting Partners', '&#x1F4E7;'); } },
-  comms: { icon: '&#x1F4AC;', title: 'Comm. Platforms', badge: 'Platforms', bc: 'bg', fn: function() { return comingSoon('Comm. Platforms', '&#x1F4AC;'); } },
-  airbnb: { icon: '&#x1F534;', title: 'Airbnb', badge: 'Platform', bc: 'br', fn: function() { return comingSoon('Airbnb', '&#x1F534;'); } },
-  cirrus: { icon: '&#x2601;&#xFE0F;', title: 'Cirrus', badge: 'Platform', bc: 'bg', fn: function() { return comingSoon('Cirrus', '&#x2601;&#xFE0F;'); } },
-  vrbo: { icon: '&#x1F3E0;', title: 'VRBO', badge: 'Platform', bc: 'bg', fn: function() { return comingSoon('VRBO', '&#x1F3E0;'); } },
-  bookingcom: { icon: '&#x1F535;', title: 'Booking.com', badge: 'Platform', bc: 'bg', fn: function() { return comingSoon('Booking.com', '&#x1F535;'); } },
-  tags: { icon: '&#x1F3F7;&#xFE0F;', title: 'Tags', badge: 'Operations', bc: 'by', fn: function() { return comingSoon('Tags', '&#x1F3F7;&#xFE0F;'); } },
-  cancellations: { icon: '&#x274C;', title: 'Cancellations', badge: 'Operations', bc: 'br', fn: function() { return comingSoon('Cancellations', '&#x274C;'); } },
-  autohost: { icon: '&#x1F916;', title: 'Autohost', badge: 'Operations', bc: 'bg', fn: function() { return comingSoon('Autohost', '&#x1F916;'); } },
-  payments: { icon: '&#x1F4B3;', title: 'Payments', badge: 'Operations', bc: 'by', fn: function() { return comingSoon('Payments', '&#x1F4B3;'); } },
-  extras: { icon: '&#x2B50;', title: "Extra's", badge: 'Reference', bc: 'bg', fn: extrasPage }
+var SETUP_IDS=["s1","s2","s3","s4","s5","s6","s7","s8","s9","s10","s11","s12","s13","s14"];
+var EXTRA_IDS=["e1","e2","e3","e4","e5","e6","e7","e8","e9","e10","e11","e12","e13","e14","e15","e16","e17","e18"];
+var curTz="sa";
+var SCHED={
+  mon:{label:"Monday",off:true},
+  tue:{label:"Tuesday",off:true},
+  wed:{label:"Wednesday",sa:"10:30 AM - 6:00 PM",ph:"5:30 PM - 1:00 AM",eu:"9:30 AM - 5:00 PM",us:"2:30 AM - 10:00 AM",ca:"2:30 AM - 10:00 AM"},
+  thu:{label:"Thursday",sa:"10:30 AM - 5:50 PM",ph:"5:30 PM - 12:50 AM",eu:"9:30 AM - 4:50 PM",us:"2:30 AM - 9:50 AM",ca:"2:30 AM - 9:50 AM"},
+  fri:{label:"Friday",sa:"10:30 AM - 5:30 PM",ph:"5:30 PM - 12:30 AM",eu:"9:30 AM - 4:30 PM",us:"2:30 AM - 9:30 AM",ca:"2:30 AM - 9:30 AM"},
+  sat:{label:"Saturday",off:true},
+  sun:{label:"Sunday",off:true}
 };
 
-function show(id) {
-  var btns = document.querySelectorAll('.nb');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
-  var btn = document.getElementById('n-' + id);
-  if (btn) btn.classList.add('active');
-  var pg = PAGES[id];
-  if (!pg) return;
-  var hdr = '<div class="mh"><div class="mh-icon">' + pg.icon + '</div><div><h1>' + pg.title + '</h1><p>&nbsp;</p><span class="badge ' + pg.bc + '">' + pg.badge + '</span></div></div>';
-  document.getElementById('main').innerHTML = hdr + pg.fn();
-  if (id === 'extras') restoreExtras();
-  var user = getUser();
-  try { localStorage.setItem('ls-' + user, id); } catch(e) {}
-}
+document.getElementById("name-select").addEventListener("change",function(){document.getElementById("name-btn").disabled=!this.value;});
 
-// On load: check if user already picked a name
-var storedUser = getUser();
-if (storedUser) {
-  document.getElementById('name-overlay').style.display = 'none';
-  updateUserChip(storedUser);
-  var ls = 'home';
-  try { ls = localStorage.getItem('ls-' + storedUser) || 'home'; } catch(e) {}
-  show(ls);
+function startTraining(){
+  var name=document.getElementById("name-select").value;
+  if(!name)return;
+  try{localStorage.setItem("jt-user",name);}catch(e){}
+  document.getElementById("name-overlay").style.display="none";
+  document.getElementById("user-chip").textContent="Logged in as: "+name;
+  var last="home";
+  try{last=localStorage.getItem("jt-last-"+name)||"home";}catch(e){}
+  show(last);
   updSidebar();
 }
+
+function getUser(){try{return localStorage.getItem("jt-user")||"";}catch(e){return"";}}
+
+function getSetupP(){
+  var u=getUser();var done=0;
+  for(var i=0;i<SETUP_IDS.length;i++){if(localStorage.getItem(u+"-setup-"+SETUP_IDS[i]))done++;}
+  return{done:done,total:SETUP_IDS.length,pct:Math.round(done/SETUP_IDS.length*100)};
+}
+
+function getExtraP(){
+  var u=getUser();var done=0;var total=EXTRA_IDS.length*2;
+  for(var i=0;i<EXTRA_IDS.length;i++){
+    if(localStorage.getItem(u+"-vid-"+EXTRA_IDS[i]))done++;
+    if(localStorage.getItem(u+"-trs-"+EXTRA_IDS[i]))done++;
+  }
+  return{done:done,total:total,pct:Math.round(done/total*100)};
+}
+
+function updSidebar(){
+  var sp=getSetupP();var ep=getExtraP();
+  var done=sp.done+ep.done;var total=sp.total+ep.total;
+  var pct=Math.round(done/total*100);
+  document.getElementById("pct").textContent=pct+"%";
+  document.getElementById("pbi").style.width=pct+"%";
+}
+function setTz(tz){
+  curTz=tz;
+  var btns=document.querySelectorAll(".tz-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  var b=document.getElementById("tz-"+tz);
+  if(b)b.classList.add("active");
+  var days=["mon","tue","wed","thu","fri","sat","sun"];
+  for(var d=0;d<days.length;d++){
+    var day=days[d];var s=SCHED[day];
+    var timeEl=document.getElementById("st-"+day);
+    var saEl=document.getElementById("ssa-"+day);
+    if(!timeEl)continue;
+    if(s.off){
+      timeEl.innerHTML='<span class="sched-off">Off</span>';
+      if(saEl)saEl.textContent="";
+    } else {
+      var t="";
+      if(tz==="sa")t=s.sa;
+      else if(tz==="ph")t=s.ph;
+      else if(tz==="eu")t=s.eu;
+      else if(tz==="us")t=s.us;
+      else if(tz==="ca")t=s.ca;
+      timeEl.innerHTML='<span class="sched-time">'+t+'</span>';
+      if(saEl)saEl.textContent=(tz!=="sa")?"&#x1F1FF;&#x1F1E6; "+s.sa:"";
+    }
+  }
+}
+
+function homePage(){
+  var u=getUser();var sp=getSetupP();var ep=getExtraP();
+  var done=sp.done+ep.done;var total=sp.total+ep.total;
+  var pct=Math.round(done/total*100);
+  var h="";
+  h+='<div class="welcome-card">';
+  h+='<div style="font-size:44px;line-height:1">&#x2708;&#xFE0F;</div>';
+  h+='<div style="flex:1">';
+  h+='<span class="welcome-title">Welcome to Jetstream Training! &#x1F44B;</span>';
+  h+='<span class="welcome-sub">'+(u?"Hi "+u+"! ":"")+"Work through each module using the menu on the left. Take your time, tick off tasks as you go."+'</span>';
+  h+='</div></div>';
+  h+='<div class="card"><h2>&#x1F4C5; Work Schedule</h2>';
+  h+='<div class="tz-btns">';
+  h+='<button class="tz-btn'+(curTz==="sa"?" active":"")+'" id="tz-sa" onclick="setTz('+"'sa'"+')">&#x1F1FF;&#x1F1E6; South Africa</button>';
+  h+='<button class="tz-btn'+(curTz==="ph"?" active":"")+'" id="tz-ph" onclick="setTz('+"'ph'"+')">&#x1F1F5;&#x1F1ED; Manila</button>';
+  h+='<button class="tz-btn'+(curTz==="eu"?" active":"")+'" id="tz-eu" onclick="setTz('+"'eu'"+')">&#x1F1EA;&#x1F1FA; Europe</button>';
+  h+='<button class="tz-btn'+(curTz==="us"?" active":"")+'" id="tz-us" onclick="setTz('+"'us'"+')">&#x1F1FA;&#x1F1F8; USA</button>';
+  h+='<button class="tz-btn'+(curTz==="ca"?" active":"")+'" id="tz-ca" onclick="setTz('+"'ca'"+')">&#x1F1E8;&#x1F1E6; Canada</button>';
+  h+='</div>';
+  h+='<div class="sched-grid">';
+  var days=["mon","tue","wed","thu","fri","sat","sun"];
+  for(var d=0;d<days.length;d++){
+    var day=days[d];var s=SCHED[day];
+    var isOff=s.off;
+    h+='<div class="sched-day'+(isOff?" off":"")+'">';
+    h+='<div class="sched-day-name">'+s.label+'</div>';
+    if(isOff){
+      h+='<div id="st-'+day+'"><span class="sched-off">Off</span></div>';
+      h+='<div id="ssa-'+day+'"></div>';
+    } else {
+      var t=curTz==="sa"?s.sa:curTz==="ph"?s.ph:curTz==="eu"?s.eu:curTz==="us"?s.us:s.ca;
+      h+='<div id="st-'+day+'"><span class="sched-time">'+t+'</span></div>';
+      h+='<div class="sched-sa" id="ssa-'+day+'">'+( curTz!=="sa"?s.sa:"")+'</div>';
+    }
+    h+='</div>';
+  }
+  h+='</div></div>';
+  h+='<div class="prog-wrap"><h3>&#x1F4CA; Your Training Progress</h3>';
+  h+='<div class="c-stats"><div class="c-pct">'+pct+'%</div><div class="c-detail">'+done+" of "+total+" tasks completed</div></div>";
+  h+='<div class="big-pb"><div class="big-pbi" style="width:'+pct+'%"></div></div></div>';
+  return h;
+}
+function comingSoon(title,icon){return'<div class="card"><h2>'+icon+" "+title+"</h2><p>This section is coming soon!</p></div>";}
+
+function setupPage(){
+  var u=getUser();var sp=getSetupP();
+  var h='<div class="prog-wrap"><h3>&#x2699;&#xFE0F; Getting Started Progress</h3>';
+  h+='<div class="c-stats"><div class="c-pct" id="spct">'+sp.pct+'%</div><div class="c-detail" id="sdet">'+sp.done+" of "+sp.total+" items completed</div></div>";
+  h+='<div class="big-pb"><div class="big-pbi" id="sbar" style="width:'+sp.pct+'%"></div></div></div>';
+  var groups=[
+    {label:"&#x2757; Important - set up in your first days",items:[
+      {id:"s1",name:"Gmail",who:"Set up by: Mieke",note:"Mieke will set up an account and send you credentials."},
+      {id:"s2",name:"Slack",who:"Set up by: Kirsten",note:"Kirsten will set up an account and send you credentials."},
+      {id:"s3",name:"1Password and Chrome Extension",who:"Set up by: Mieke",note:"Chris will send credentials. Install the 1Password Chrome extension."},
+      {id:"s4",name:"Cirrus",who:"Set up by: Chris",note:"Use your Jetstream Gmail credentials to log in."},
+      {id:"s5",name:"Google Calendar",who:"Set up by: Mieke",note:"Use the hello@jetstreamtech.io Gmail account."},
+      {id:"s6",name:"Hubspot",who:"Set up by: Kirsten",note:"A unique Hubspot link will be sent to you."}
+    ]},
+    {label:"&#x1F4E7; Set up by Kirsten - invite sent to work Gmail",items:[
+      {id:"s7",name:"Jetchat",who:"Set up by: Kirsten",note:"Kirsten will set this up for you."},
+      {id:"s8",name:"Aircall",who:"Set up by: Kirsten",note:"Kirsten will set this up for you."},
+      {id:"s9",name:"Front",who:"Set up by: Kirsten",note:"Kirsten will set this up for you."},
+      {id:"s10",name:"Enso",who:"Set up by: Kirsten",note:"Kirsten will set this up for you."}
+    ]},
+    {label:"&#x23F3; Set up at a later stage",items:[
+      {id:"s11",name:"Stripe",who:"Set up by: Jess",note:"Comes at a later stage in your training."},
+      {id:"s12",name:"Humi",who:"Set up by: Jennifer",note:"Comes at a later stage in your training."}
+    ]},
+    {label:"&#x1F511; Shared accounts - credentials in 1Password",items:[
+      {id:"s13",name:"Notion",who:"B2C access",note:"Find credentials in 1Password. Do not log in using Gmail."},
+      {id:"s14",name:"Power BI",who:"B2C access",note:"Find credentials in 1Password."}
+    ]}
+  ];
+  for(var g=0;g<groups.length;g++){
+    var grp=groups[g];
+    h+='<div class="group-label">'+grp.label+"</div>";
+    for(var i=0;i<grp.items.length;i++){
+      var it=grp.items[i];
+      var checked=localStorage.getItem(u+"-setup-"+it.id)?"checked":"";
+      var dc=checked?" done":"";
+      h+='<div class="setup-item'+dc+'" id="si-'+it.id+'">';
+      h+='<input type="checkbox" id="sc-'+it.id+'" '+checked+' onchange="updSetup()">';
+      h+='<div class="setup-info"><div class="setup-name">'+it.name+"</div>";
+      h+='<div class="setup-who">'+it.who+"</div>";
+      h+='<div class="setup-note">'+it.note+"</div></div></div>";
+    }
+  }
+  return h;
+}
+
+function updSetup(){
+  var u=getUser();var done=0;
+  for(var i=0;i<SETUP_IDS.length;i++){
+    var id=SETUP_IDS[i];var cb=document.getElementById("sc-"+id);var el=document.getElementById("si-"+id);
+    if(cb&&cb.checked){done++;localStorage.setItem(u+"-setup-"+id,"1");}else if(cb){localStorage.removeItem(u+"-setup-"+id);}
+    if(el)el.classList.toggle("done",!!(cb&&cb.checked));
+  }
+  var pct=Math.round(done/SETUP_IDS.length*100);
+  var pe=document.getElementById("spct");if(pe)pe.textContent=pct+"%";
+  var be=document.getElementById("sbar");if(be)be.style.width=pct+"%";
+  var de=document.getElementById("sdet");if(de)de.textContent=done+" of "+SETUP_IDS.length+" items completed"+(pct===100?" &#x1F389;":"");
+  updSidebar();
+}
+function extrasPage(){
+  var u=getUser();var ep=getExtraP();
+  var items=[
+    {id:"e1",t:"New confirmed nexpax booking",v:"",tr:""},
+    {id:"e2",t:"How to open an Airbnb ticket",v:"",tr:""},
+    {id:"e3",t:"Catch up",v:"",tr:""},
+    {id:"e4",t:"Sending email to partner",v:"",tr:""},
+    {id:"e5",t:"Airbnb availability issues",v:"",tr:"https://docs.google.com/document/d/1pVZGmnE6hR74Jx7Xa51g0XPWwCDODk-gwWeDHy9XXL4/edit"},
+    {id:"e6",t:"Processing a new Booking.com reservation",v:"",tr:""},
+    {id:"e7",t:"Booking.com VCC",v:"",tr:""},
+    {id:"e8",t:"Add email when guest confirms",v:"",tr:""},
+    {id:"e9",t:"Send guest contact details to partner",v:"",tr:""},
+    {id:"e10",t:"Rate discrepancy",v:"",tr:""},
+    {id:"e11",t:"Processing a new VRBO booking",v:"",tr:""},
+    {id:"e12",t:"Info required part 1",v:"",tr:""},
+    {id:"e13",t:"Follow up guest tag examples",v:"",tr:""},
+    {id:"e14",t:"Follow up guest tag examples part 2",v:"",tr:""},
+    {id:"e15",t:"When to add a follow up guest tag",v:"",tr:""},
+    {id:"e16",t:"Handling the inbox part 1",v:"",tr:""},
+    {id:"e17",t:"Handling the inbox part 2",v:"",tr:""},
+    {id:"e18",t:"Checking spam",v:"",tr:""}
+  ];
+  var h='<div class="prog-wrap"><h3>&#x1F4CA; Your Progress</h3>';
+  h+='<div class="c-stats"><div class="c-pct" id="epct">'+ep.pct+'%</div><div class="c-detail" id="edet">'+ep.done+" of "+ep.total+" tasks completed</div></div>";
+  h+='<div class="big-pb"><div class="big-pbi" id="ebar" style="width:'+ep.pct+'%"></div></div></div>';
+  for(var i=0;i<items.length;i++){
+    var it=items[i];
+    var vbtn=it.v?'<a class="lbtn" href="'+it.v+'" target="_blank">&#x25B6; Video</a>':'<span class="lbtn" style="opacity:0.4">&#x25B6; Video</span>';
+    var tbtn=it.tr?'<a class="lbtn gr" href="'+it.tr+'" target="_blank">&#x1F4C4; Transcript</a>':'<span class="lbtn gr" style="opacity:0.4">&#x1F4C4; Transcript</span>';
+    h+='<div class="extra-item" id="ei-'+it.id+'">';
+    h+='<div class="ei-title">'+it.t+"</div>";
+    h+='<div class="ei-links">'+vbtn+tbtn+"</div>";
+    h+='<div class="ei-checks"><label class="chk"><input type="checkbox" id="vid-'+it.id+'" onchange="updExtra()"> &#x2705; Watched</label>';
+    h+='<label class="chk"><input type="checkbox" id="trs-'+it.id+'" onchange="updExtra()"> &#x1F4C4; Read transcript</label></div></div>';
+  }
+  return h;
+}
+
+function updExtra(){
+  var u=getUser();var done=0;var total=EXTRA_IDS.length*2;
+  for(var i=0;i<EXTRA_IDS.length;i++){
+    var id=EXTRA_IDS[i];var v=document.getElementById("vid-"+id);var t=document.getElementById("trs-"+id);var el=document.getElementById("ei-"+id);
+    if(v&&v.checked){done++;localStorage.setItem(u+"-vid-"+id,"1");}else if(v){localStorage.removeItem(u+"-vid-"+id);}
+    if(t&&t.checked){done++;localStorage.setItem(u+"-trs-"+id,"1");}else if(t){localStorage.removeItem(u+"-trs-"+id);}
+    if(el)el.classList.toggle("done",!!(v&&t&&v.checked&&t.checked));
+  }
+  var pct=Math.round(done/total*100);
+  var pe=document.getElementById("epct");if(pe)pe.textContent=pct+"%";
+  var be=document.getElementById("ebar");if(be)be.style.width=pct+"%";
+  var de=document.getElementById("edet");if(de)de.textContent=done+" of "+total+" tasks completed"+(pct===100?" &#x1F389;":"");
+  updSidebar();
+}
+
+function restoreExtras(){
+  var u=getUser();
+  for(var i=0;i<EXTRA_IDS.length;i++){
+    var id=EXTRA_IDS[i];
+    var v=document.getElementById("vid-"+id);var t=document.getElementById("trs-"+id);
+    if(v&&localStorage.getItem(u+"-vid-"+id))v.checked=true;
+    if(t&&localStorage.getItem(u+"-trs-"+id))t.checked=true;
+  }
+  updExtra();
+}
+var PAGES={home:{icon:"home",title:"Dashboard Home",badge:"Welcome",bc:"bg",fn:homePage},setup:{icon:"gear",title:"Getting Started",badge:"Setup",bc:"bg",fn:setupPage},company:{icon:"co",title:"Who Are We?",badge:"Company",bc:"bg",fn:function(){return comingSoon("Who Are We?","");}},bookings:{icon:"bk",title:"Bookings Overview",badge:"Core Training",bc:"by",fn:function(){return comingSoon("Bookings Overview","");}},stars:{icon:"st",title:"Pink and Yellow Stars",badge:"Core Training",bc:"by",fn:function(){return comingSoon("Pink and Yellow Stars","");}},v1v2:{icon:"v1",title:"V1 and V2 Partners",badge:"Core Training",bc:"by",fn:function(){return comingSoon("V1 and V2 Partners","");}},partners:{icon:"pa",title:"Contacting Partners",badge:"Core Training",bc:"by",fn:function(){return comingSoon("Contacting Partners","");}},comms:{icon:"cm",title:"Comm. Platforms",badge:"Platforms",bc:"bg",fn:function(){return comingSoon("Comm. Platforms","");}},airbnb:{icon:"ab",title:"Airbnb",badge:"Platform",bc:"br",fn:function(){return comingSoon("Airbnb","");}},cirrus:{icon:"ci",title:"Cirrus",badge:"Platform",bc:"bg",fn:function(){return comingSoon("Cirrus","");}},vrbo:{icon:"vb",title:"VRBO",badge:"Platform",bc:"bg",fn:function(){return comingSoon("VRBO","");}},bookingcom:{icon:"bc",title:"Booking.com",badge:"Platform",bc:"bg",fn:function(){return comingSoon("Booking.com","");}},tags:{icon:"tg",title:"Tags",badge:"Operations",bc:"by",fn:function(){return comingSoon("Tags","");}},cancellations:{icon:"cx",title:"Cancellations",badge:"Operations",bc:"br",fn:function(){return comingSoon("Cancellations","");}},autohost:{icon:"ah",title:"Autohost",badge:"Operations",bc:"bg",fn:function(){return comingSoon("Autohost","");}},payments:{icon:"py",title:"Payments",badge:"Operations",bc:"by",fn:function(){return comingSoon("Payments","");}},extras:{icon:"ex",title:"Extras",badge:"Reference",bc:"bg",fn:extrasPage}};function show(id){var btns=document.querySelectorAll(".nb");for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");var btn=document.getElementById("n-"+id);if(btn)btn.classList.add("active");var pg=PAGES[id];if(!pg)return;document.getElementById("main").innerHTML=pg.fn();if(id==="extras")restoreExtras();var u=getUser();try{localStorage.setItem("jt-last-"+u,id);}catch(e){}}var su=getUser();if(su){document.getElementById("name-overlay").style.display="none";document.getElementById("user-chip").textContent="Logged in as: "+su;var ll="home";try{ll=localStorage.getItem("jt-last-"+su)||"home";}catch(e){}show(ll);updSidebar();}
 </script>
 </body>
 </html>
