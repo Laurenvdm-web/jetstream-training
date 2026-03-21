@@ -117,8 +117,8 @@ var SETUP_IDS=["s1","s2","s3","s4","s5","s6","s7","s8","s9","s10","s11","s12","s
 var EXTRA_IDS=["e1","e2","e3","e4","e5","e6","e7","e8","e9","e10","e11","e12","e13","e14","e15","e16","e17","e18"];
 var curTz="sa";
 var SCHED={
-  mon:{label:"Monday",off:true},
-  tue:{label:"Tuesday",off:true},
+  mon:{label:"Monday",sa:"9:00 AM - 5:00 PM",ph:"4:00 PM - 12:00 AM",eu:"8:00 AM - 4:00 PM",us:"1:00 AM - 9:00 AM",ca:"1:00 AM - 9:00 AM"},
+  tue:{label:"Tuesday",sa:"9:00 AM - 5:00 PM",ph:"4:00 PM - 12:00 AM",eu:"8:00 AM - 4:00 PM",us:"1:00 AM - 9:00 AM",ca:"1:00 AM - 9:00 AM"},
   wed:{label:"Wednesday",sa:"10:30 AM - 6:00 PM",ph:"5:30 PM - 1:00 AM",eu:"9:30 AM - 5:00 PM",us:"2:30 AM - 10:00 AM",ca:"2:30 AM - 10:00 AM"},
   thu:{label:"Thursday",sa:"10:30 AM - 5:50 PM",ph:"5:30 PM - 12:50 AM",eu:"9:30 AM - 4:50 PM",us:"2:30 AM - 9:50 AM",ca:"2:30 AM - 9:50 AM"},
   fri:{label:"Friday",sa:"10:30 AM - 5:30 PM",ph:"5:30 PM - 12:30 AM",eu:"9:30 AM - 4:30 PM",us:"2:30 AM - 9:30 AM",ca:"2:30 AM - 9:30 AM"},
@@ -187,7 +187,7 @@ function setTz(tz){
       else if(tz==="us")t=s.us;
       else if(tz==="ca")t=s.ca;
       timeEl.innerHTML='<span class="sched-time">'+t+'</span>';
-      if(saEl)saEl.textContent=(tz!=="sa")?"&#x1F1FF;&#x1F1E6; "+s.sa:"";
+      if(saEl)saEl.textContent=(tz!=="sa")?"SAST: "+s.sa:"";
     }
   }
 }
@@ -205,11 +205,11 @@ function homePage(){
   h+='</div></div>';
   h+='<div class="card"><h2>&#x1F4C5; Work Schedule</h2>';
   h+='<div class="tz-btns">';
-  h+='<button class="tz-btn'+(curTz==="sa"?" active":"")+'" id="tz-sa" onclick="setTz('+"'sa'"+')">&#x1F1FF;&#x1F1E6; South Africa</button>';
-  h+='<button class="tz-btn'+(curTz==="ph"?" active":"")+'" id="tz-ph" onclick="setTz('+"'ph'"+')">&#x1F1F5;&#x1F1ED; Manila</button>';
-  h+='<button class="tz-btn'+(curTz==="eu"?" active":"")+'" id="tz-eu" onclick="setTz('+"'eu'"+')">&#x1F1EA;&#x1F1FA; Europe</button>';
-  h+='<button class="tz-btn'+(curTz==="us"?" active":"")+'" id="tz-us" onclick="setTz('+"'us'"+')">&#x1F1FA;&#x1F1F8; USA</button>';
-  h+='<button class="tz-btn'+(curTz==="ca"?" active":"")+'" id="tz-ca" onclick="setTz('+"'ca'"+')">&#x1F1E8;&#x1F1E6; Canada</button>';
+  h+='<button class="tz-btn'+(curTz==="sa"?" active":"")+'" id="tz-sa" onclick="setTz('+"'sa'"+')">South Africa (SAST)</button>';
+  h+='<button class="tz-btn'+(curTz==="ph"?" active":"")+'" id="tz-ph" onclick="setTz('+"'ph'"+')">Manila</button>';
+  h+='<button class="tz-btn'+(curTz==="eu"?" active":"")+'" id="tz-eu" onclick="setTz('+"'eu'"+')">Europe</button>';
+  h+='<button class="tz-btn'+(curTz==="us"?" active":"")+'" id="tz-us" onclick="setTz('+"'us'"+')">USA</button>';
+  h+='<button class="tz-btn'+(curTz==="ca"?" active":"")+'" id="tz-ca" onclick="setTz('+"'ca'"+')">Canada</button>';
   h+='</div>';
   h+='<div class="sched-grid">';
   var days=["mon","tue","wed","thu","fri","sat","sun"];
