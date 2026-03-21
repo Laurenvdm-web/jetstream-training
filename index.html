@@ -54,9 +54,37 @@ nav{padding:8px 0}
 .ei-checks{display:flex;gap:16px}
 .chk{display:flex;align-items:center;gap:5px;font-size:12px;color:#4a5568;cursor:pointer}
 .chk input{width:14px;height:14px;accent-color:#667eea}
+/* Name picker overlay */
+#name-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,30,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px)}
+#name-box{background:#fff;border-radius:18px;padding:40px 44px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+#name-box .nb-icon{font-size:52px;margin-bottom:16px}
+#name-box h2{font-size:22px;font-weight:800;color:#1a1a2e;margin-bottom:8px}
+#name-box p{font-size:13px;color:#4a5568;margin-bottom:24px;line-height:1.6}
+#name-select{width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;color:#1a1a2e;background:#f7fafc;margin-bottom:16px;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5568' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+#name-select:focus{outline:none;border-color:#667eea}
+#name-btn{width:100%;padding:13px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s}
+#name-btn:hover{opacity:0.9}
+#name-btn:disabled{opacity:0.4;cursor:not-allowed}
+#user-chip{font-size:11px;color:#8892b0;margin-top:8px;display:block}
 </style>
 </head>
 <body>
+
+<!-- Name picker overlay -->
+<div id="name-overlay">
+  <div id="name-box">
+    <div class="nb-icon">&#x2708;&#xFE0F;</div>
+    <h2>Welcome to Jetstream Training!</h2>
+    <p>Before we get started, please select your name from the list below.</p>
+    <select id="name-select">
+      <option value="">-- Select your name --</option>
+      <option value="Jada">Jada</option>
+      <option value="Other">Other</option>
+    </select>
+    <button id="name-btn" onclick="startTraining()" disabled>Start Training &#x1F680;</button>
+  </div>
+</div>
+
 <aside id="sidebar">
   <div id="sh"><div class="logo">&#x2708;&#xFE0F; Training at Jetstream</div><div class="sub">B2C Guest Services &middot; 2025</div></div>
   <nav>
@@ -88,18 +116,48 @@ nav{padding:8px 0}
   <div id="pf">
     <span id="pp">Training Progress: <strong id="pct">0%</strong></span>
     <div class="pb"><div class="pbi" id="pbi" style="width:0%"></div></div>
+    <span id="user-chip"></span>
   </div>
 </aside>
-<main id="main"></main>
-<script>
 
+<main id="main"></main>
+
+<script>
 var IDS = ['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13','e14','e15','e16','e17','e18'];
+var NAMES = ['Jada','Other'];
+
+// Name select dropdown enable/disable
+document.getElementById('name-select').addEventListener('change', function() {
+  document.getElementById('name-btn').disabled = !this.value;
+});
+
+function startTraining() {
+  var name = document.getElementById('name-select').value;
+  if (!name) return;
+  try { localStorage.setItem('jt-user', name); } catch(e) {}
+  document.getElementById('name-overlay').style.display = 'none';
+  updateUserChip(name);
+  var ls = 'home';
+  try { ls = localStorage.getItem('ls-' + name) || 'home'; } catch(e) {}
+  show(ls);
+  updSidebar();
+}
+
+function updateUserChip(name) {
+  var chip = document.getElementById('user-chip');
+  if (chip && name) chip.textContent = 'Logged in as: ' + name;
+}
+
+function getUser() {
+  try { return localStorage.getItem('jt-user') || ''; } catch(e) { return ''; }
+}
 
 function getP() {
+  var user = getUser();
   var done = 0, total = IDS.length * 2;
   for (var i = 0; i < IDS.length; i++) {
-    if (localStorage.getItem('vid-' + IDS[i])) done++;
-    if (localStorage.getItem('trs-' + IDS[i])) done++;
+    if (localStorage.getItem(user + '-vid-' + IDS[i])) done++;
+    if (localStorage.getItem(user + '-trs-' + IDS[i])) done++;
   }
   return { done: done, total: total, pct: Math.round((done / total) * 100) };
 }
@@ -110,24 +168,21 @@ function updSidebar() {
   document.getElementById('pbi').style.width = p.pct + '%';
 }
 
-function save(key, val) {
-  try { localStorage.setItem(key, val); } catch(e) {}
-}
-
-function load(key, def) {
-  try { return localStorage.getItem(key) || def; } catch(e) { return def; }
-}
+function save(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
+function load(key, def) { try { return localStorage.getItem(key) || def; } catch(e) { return def; } }
 
 function homePage() {
+  var user = getUser();
   var title = load('wt', 'Welcome to Jetstream Training! &#x1F44B;');
   var sub = load('ws', 'Work through each module using the menu on the left. Take your time, tick off tasks as you go, and use the training AI model for any questions.');
   var p = getP();
+  var greeting = user ? ('Hi ' + user + '! ') : '';
   var html = '';
   html += '<div class="welcome-card">';
   html += '<div style="font-size:44px;line-height:1">&#x2708;&#xFE0F;</div>';
   html += '<div style="flex:1">';
   html += '<span class="welcome-title editable" contenteditable="true" id="wt-el" onblur="save(\'wt\',this.innerHTML)">' + title + '</span>';
-  html += '<span class="welcome-sub editable" contenteditable="true" id="ws-el" onblur="save(\'ws\',this.innerHTML)">' + sub + '</span>';
+  html += '<span class="welcome-sub editable" contenteditable="true" id="ws-el" onblur="save(\'ws\',this.innerHTML)">' + greeting + sub + '</span>';
   html += '</div></div>';
   html += '<div class="card">';
   html += '<h2>&#x1F4CA; Your Training Progress</h2>';
@@ -142,6 +197,7 @@ function comingSoon(title, icon) {
 }
 
 function extrasPage() {
+  var user = getUser();
   var items = [
     {id:'e1',t:'New confirmed nexpax booking',v:'',tr:''},
     {id:'e2',t:'How to open an Airbnb ticket',v:'',tr:''},
@@ -173,23 +229,26 @@ function extrasPage() {
     html += '<div class="extra-item" id="ei-' + it.id + '">' +
       '<div class="ei-title">' + it.t + '</div>' +
       '<div class="ei-links">' + vbtn + tbtn + '</div>' +
-      '<div class="ei-checks">'  +
-        '<label class="chk"><input type="checkbox" id="vid-' + it.id + '" onchange="upd()"> &#x2705; Watched</label>' +
-        '<label class="chk"><input type="checkbox" id="trs-' + it.id + '" onchange="upd()"> &#x1F4C4; Read transcript</label>' +
+      '<div class="ei-checks">' +
+      '<label class="chk"><input type="checkbox" id="vid-' + it.id + '" onchange="upd()"> &#x2705; Watched</label>' +
+      '<label class="chk"><input type="checkbox" id="trs-' + it.id + '" onchange="upd()"> &#x1F4C4; Read transcript</label>' +
       '</div></div>';
   }
   return html;
 }
 
 function upd() {
+  var user = getUser();
   var done = 0, total = IDS.length * 2;
   for (var i = 0; i < IDS.length; i++) {
     var id = IDS[i];
     var v = document.getElementById('vid-' + id);
     var t = document.getElementById('trs-' + id);
     var el = document.getElementById('ei-' + id);
-    if (v && v.checked) { done++; localStorage.setItem('vid-' + id, '1'); } else if (v) { localStorage.removeItem('vid-' + id); }
-    if (t && t.checked) { done++; localStorage.setItem('trs-' + id, '1'); } else if (t) { localStorage.removeItem('trs-' + id); }
+    if (v && v.checked) { done++; localStorage.setItem(user + '-vid-' + id, '1'); }
+    else if (v) { localStorage.removeItem(user + '-vid-' + id); }
+    if (t && t.checked) { done++; localStorage.setItem(user + '-trs-' + id, '1'); }
+    else if (t) { localStorage.removeItem(user + '-trs-' + id); }
     if (el) el.classList.toggle('done', !!(v && t && v.checked && t.checked));
   }
   var pct = Math.round((done / total) * 100);
@@ -200,12 +259,13 @@ function upd() {
 }
 
 function restoreExtras() {
+  var user = getUser();
   for (var i = 0; i < IDS.length; i++) {
     var id = IDS[i];
     var v = document.getElementById('vid-' + id);
     var t = document.getElementById('trs-' + id);
-    if (v && localStorage.getItem('vid-' + id)) v.checked = true;
-    if (t && localStorage.getItem('trs-' + id)) t.checked = true;
+    if (v && localStorage.getItem(user + '-vid-' + id)) v.checked = true;
+    if (t && localStorage.getItem(user + '-trs-' + id)) t.checked = true;
   }
   upd();
 }
@@ -240,14 +300,20 @@ function show(id) {
   var hdr = '<div class="mh"><div class="mh-icon">' + pg.icon + '</div><div><h1>' + pg.title + '</h1><p>&nbsp;</p><span class="badge ' + pg.bc + '">' + pg.badge + '</span></div></div>';
   document.getElementById('main').innerHTML = hdr + pg.fn();
   if (id === 'extras') restoreExtras();
-  try { localStorage.setItem('ls', id); } catch(e) {}
+  var user = getUser();
+  try { localStorage.setItem('ls-' + user, id); } catch(e) {}
 }
 
-var ls = 'home';
-try { ls = localStorage.getItem('ls') || 'home'; } catch(e) {}
-show(ls);
-updSidebar();
-
+// On load: check if user already picked a name
+var storedUser = getUser();
+if (storedUser) {
+  document.getElementById('name-overlay').style.display = 'none';
+  updateUserChip(storedUser);
+  var ls = 'home';
+  try { ls = localStorage.getItem('ls-' + storedUser) || 'home'; } catch(e) {}
+  show(ls);
+  updSidebar();
+}
 </script>
 </body>
 </html>
